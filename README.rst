@@ -22,6 +22,14 @@ Installation
       url(r'^datarequests/', include('data_requests.urls')),
     ) + urlpatterns
 
+- Optionally add a link to the datarequests url in site_base.html template::
+
+    {% block extra_tab %}
+    <li>
+      <a href="/datarequests">Requests</a>
+    </li>
+    {% endblock %}
+
 - python manage.py syncdb
 
 Running tests
