@@ -1,11 +1,11 @@
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, render_to_response
+from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.template.response import TemplateResponse
 from django.views.generic import DetailView
-from django_tables2 import RequestConfig, SingleTableView
+from django_tables2 import SingleTableView
 import django_filters
 from .models import DataRequest, DataRequestTable
 from .forms import DataRequestForm, DataRequestAdminForm
@@ -26,8 +26,10 @@ def request_new(request, template='data_requests/request_new.html'):
             "request_form": form
         }))
 
+
 @login_required
-def request_edit(request, request_id, template='data_requests/request_edit.html'):
+def request_edit(request, request_id,
+                 template='data_requests/request_edit.html'):
     """
     Edit a data request.  Available only to Django admins (super-users).
     """
@@ -63,7 +65,6 @@ class PagedFilteredTableView(SingleTableView):
     SingleTableView with filtering and paging capabilities
     """
     filter_class = None
-    #formhelper_class = None
     context_filter_name = 'filter'
 
     def get_queryset(self, **kwargs):
@@ -82,10 +83,12 @@ class DataRequestFilter(django_filters.FilterSet):
     Filters for data requests: status and source fields
     """
     source = django_filters.ChoiceFilter()
+
     def __init__(self, *args, **kwargs):
         super(DataRequestFilter, self).__init__(*args, **kwargs)
-        choices = [('', 'All'),]
-        sources = list(DataRequest.objects.all().values_list("source", "source").distinct())
+        choices = [('', 'All'), ]
+        sources = list(DataRequest.objects.all().values_list(
+            "source", "source").distinct())
         sources.sort()
         choices.extend(sources)
         self.filters['source'].extra.update(

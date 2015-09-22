@@ -22,7 +22,7 @@
     "model": "data_requests.DataRequest",
     "fields": {
       "name": "NASA SRTM mission data for Greenland",
-      "description":  "Extended description of NASA SRTM mission data for Greenland",
+      "description":  "Extended description of NASA SRTM data",
       "requestor_name": "Walt Whitman",
       "requestor_email": "ww@ww.com",
       "source": "NASA",

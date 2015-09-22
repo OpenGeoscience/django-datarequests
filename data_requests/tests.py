@@ -34,7 +34,7 @@ class DataRequestTests(TestCase):
         """
         response = self.client.get(reverse('data_request_detail', args=[1]))
         self.assertEquals(response.status_code, 200)
-        self.assertContains(response, "Extended description of NASA SRTM mission data for Greenland")
+        self.assertContains(response, "Extended description of NASA SRTM data")
 
     def test_data_request_edit_url(self):
         """
@@ -45,7 +45,8 @@ class DataRequestTests(TestCase):
         self.client.login(username='bobby', password='bob')
         response = self.client.get(reverse('data_request_edit', args=[1]))
         self.assertEquals(response.status_code, 200)
-        self.assertContains(response, "Update NASA SRTM mission data for Greenland")
+        self.assertContains(response,
+                            "Update NASA SRTM mission data for Greenland")
 
     def test_data_request_list_url(self):
         """
@@ -56,4 +57,3 @@ class DataRequestTests(TestCase):
         self.assertContains(response, "NASA SRTM mission data for Greenland")
         self.assertContains(response, "USGS Earthquake Data")
         self.assertContains(response, "22 data requests")
-
