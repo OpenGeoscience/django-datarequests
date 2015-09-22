@@ -1,6 +1,7 @@
 import os
 from distutils.core import setup
 
+
 def read(*rnames):
     return open(os.path.join(os.path.dirname(__file__), *rnames)).read()
 
@@ -19,9 +20,8 @@ setup(
     license="BSD",
     keywords="epidemico geonode data requests",
     url='https://github.com/epidemico/django-datarequests',
-    packages=['data_requests',],
+    packages=['data_requests', ],
     install_requires=[
-      'geonode',
       'django-tables2',
       'django-filter'
     ],

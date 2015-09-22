@@ -4,6 +4,9 @@ from .models import DataRequest
 
 
 class DataRequestForm(forms.ModelForm):
+    """
+    Form for creating new data requests.
+    """
     def __init__(self, *args, **kwargs):
         super(DataRequestForm, self).__init__(*args, **kwargs)
         for field in self.fields:
@@ -22,7 +25,9 @@ class DataRequestForm(forms.ModelForm):
 
 
 class DataRequestAdminForm(DataRequestForm):
-
+    """
+    Form to edit existing data requests, intended for admins only.
+    """
     data_url = forms.URLField(label=_('Link to data'), required=False)
 
     class Meta:
