@@ -73,7 +73,7 @@
 </dl>
 </article>
 
-{% if request.user.is_superuser  %}
+{% if request.user.is_superuser or request.user.email == object.requestor_email %}
    <a href="{%  url "data_request_edit" object.id %}">{%  trans "Update this request" %}</a>
 {% endif %}
 

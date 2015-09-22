@@ -12,7 +12,17 @@
 Required fields are indicated by an asterisk (*).
 </div>
 
-{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+{% if request_form.errors  %}
+    <div style="background-color: pink">{% blocktrans %}Error saving request.  Please check the following fields: {% endblocktrans %}
+    <ul>
+    {% for field in request_form %}
+        {% if field.errors %}
+            <li>{{ field.label }} {{ field.errors }}</li>
+        {% endif %}
+    {% endfor %}
+    </ul>
+    </div>
+{% endif %}
 
 <form action="{% url 'data_request_edit' data_request.id %}" method="post">
 {% csrf_token %}

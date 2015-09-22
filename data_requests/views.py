@@ -10,6 +10,7 @@ import django_filters
 from .models import DataRequest, DataRequestTable
 from .forms import DataRequestForm, DataRequestAdminForm
 
+DEFAULT_LIST_PARAMS = "?status=Open&sort=-modified_dttm"
 
 def request_new(request, template='data_requests/request_new.html'):
     """
@@ -18,13 +19,20 @@ def request_new(request, template='data_requests/request_new.html'):
     if request.method == "POST":
         # save new request
         form = DataRequestForm(request.POST)
-        form.save()
-        return HttpResponseRedirect(reverse('data_request_list'))
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('data_request_list') +
+                                        DEFAULT_LIST_PARAMS)
     else:
-        form = DataRequestForm()
-        return render_to_response(template, RequestContext(request, {
-            "request_form": form
-        }))
+        if request.user.is_anonymous():
+            form = DataRequestForm()
+        else:
+            form = DataRequestForm({
+                'requestor_name': request.user.get_full_name(),
+                'requestor_email': request.user.email})
+    return render_to_response(template, RequestContext(request, {
+        "request_form": form
+    }))
 
 
 @login_required
@@ -33,20 +41,24 @@ def request_edit(request, request_id,
     """
     Edit a data request.  Available only to Django admins (super-users).
     """
-    if not request.user.is_superuser:
-        return TemplateResponse(request, '401.html', {}, status=401).render()
     data_request = DataRequest.objects.get(id=request_id)
+    if (not request.user.is_superuser and
+                request.user.email != data_request.requestor_email):
+        return TemplateResponse(request, '401.html', {}, status=401).render()
+
     if request.method == "POST":
         # save new request
         form = DataRequestAdminForm(request.POST, instance=data_request)
-        form.save()
-        return HttpResponseRedirect(reverse('data_request_list'))
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('data_request_list') +
+                                        DEFAULT_LIST_PARAMS)
     else:
         form = DataRequestAdminForm(instance=data_request)
-        return render_to_response(template, RequestContext(request, {
-            "request_form": form,
-            "data_request": data_request
-        }))
+    return render_to_response(template, RequestContext(request, {
+        "request_form": form,
+        "data_request": data_request
+    }))
 
 
 class DataRequestDetailView(DetailView):

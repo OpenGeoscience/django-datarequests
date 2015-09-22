@@ -12,6 +12,9 @@ class DataRequestForm(forms.ModelForm):
         for field in self.fields:
             self.fields[field].widget.attrs.update({'class': 'form-control'})
 
+    requestor_name = forms.CharField(label=_('Your Name'), max_length=255,
+                                     required=True)
+    requestor_email = forms.EmailField(label=_('Your Email'), required=True)
     url = forms.URLField(label=_('Data source URL'), required=False)
     data_license_url = forms.URLField(label=_('Data license URL'),
                                       required=False)
