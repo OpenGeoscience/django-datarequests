@@ -11,34 +11,36 @@
     {{  block.super }}
     <style>
         .pagination li {
+            padding-left: 20px;
+        }
+
+        .pagination li .next {
             padding-right: 20px;
         }
     </style>
 {%  endblock %}
 
 {% block body_outer %}
-<div class="page-header">
-  <h2 class="page-title">{% trans "Requested Datasets" %}</h2>
-</div>
-<div>
-    <p><a href="{% url "data_request_new" %}">{%  trans "Request a new dataset" %}</a></p>
-</div>
+    <div class="page-header">
+        <h2 class="page-title">{% trans "Requested Datasets" %}</h2>
+    </div>
+    <div>
+        <p><a href="{% url "data_request_new" %}">{%  trans "Request a new dataset" %}</a></p>
+    </div>
     <div class="col-md-12 form-group" style="display:inline">
-<form action="" method="get">
-
-    {% for field in filter.form %}
-            <label style="margin-right:0em">{{ field.label }}:</label>
-            <div style="display:inline;padding-right:10px;">
-                {{ field }}
-            </div>
-    {% endfor %}
-
-<input type="submit" value="Filter" style="display:inline"/>
-</form>
-</div>
-
+        <form action="" method="get">
+            {% for field in filter.form %}
+                    <label style="margin-right:0em">{{ field.label }}:</label>
+                    <div style="display:inline;padding-right:10px;">
+                        {{ field }}
+                    </div>
+            {% endfor %}
+            <input type="submit" value="Filter" style="display:inline"/>
+        </form>
+    </div>
+    <div class="col-md-12 form-group">
     {% render_table table %}
-
+    </div>
 
 {% endblock %}
 

@@ -86,16 +86,23 @@ class DataRequestFilter(django_filters.FilterSet):
 
     def __init__(self, *args, **kwargs):
         super(DataRequestFilter, self).__init__(*args, **kwargs)
-        choices = [('', 'All'), ]
+        choose_all = ('', 'All')
         sources = list(DataRequest.objects.all().values_list(
             "source", "source").distinct())
         sources.sort()
-        choices.extend(sources)
+        sources.insert(0, choose_all)
+        statuses = list(self.filters['status'].extra['choices'])
+        statuses.insert(0, choose_all)
+
         self.filters['source'].extra.update(
             {
-                'choices': choices
+                'choices': sources
             })
+        self.filters['status'].extra.update(
+            {
+                'choices': statuses
 
+            })
     class Meta:
         model = DataRequest
         fields = ['status', 'source']
