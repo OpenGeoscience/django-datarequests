@@ -50,7 +50,7 @@ def request_edit(request, request_id, template='data_requests/request_edit.html'
         # save new request
         form = DataRequestAdminForm(request.POST, instance=data_request)
         form.save()
-        return HttpResponseRedirect(reverse('request_list'))
+        return HttpResponseRedirect(reverse('data_request_list'))
     else:
         form = DataRequestAdminForm(instance=data_request)
         return render_to_response(template, RequestContext(request, {
