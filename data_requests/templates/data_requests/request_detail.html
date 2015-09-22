@@ -1,0 +1,75 @@
+{% extends "data_requests/request_base.html" %}
+{% load i18n %}
+{% load bootstrap_tags %}
+{% load url from future %}
+{% load base_tags %}
+
+{% block title %}{% endblock %}
+
+{% block body_outer %}
+<div class="page-header">
+  <h2 class="page-title">{% trans "Data Request - " %}{{ object.name }}</h2>
+</div>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+
+<article itemscope itemtype="http://schema.org/Dataset" class="description tab-pane active" id="info">
+  <dl class="dl-horizontal">
+    {% if object.name %}
+    <dt>{% trans "Title" %}</dt>
+    <dd itemprop="name">{{ object.name|truncatechars:80 }}</dd>
+    {% endif %}
+
+    {% if object.description %}
+    <dt>{% trans "Description" %}</dt>
+    <dd itemprop="description">{{ object.description|escape|urlize|linebreaks|safe}}</dd>
+    {% endif %}
+
+    {% if object.source %}
+    <dt>{% trans "Source" %}</dt>
+    <dd itemprop="source">{{ object.source|escape|urlize|linebreaks|safe}}</dd>
+    {% endif %}
+
+    {% if object.url %}
+    <dt>{% trans "URL" %}</dt>
+    <dd itemprop="url">{{ object.url|escape|urlize|linebreaks|safe}}</dd>
+    {% endif %}
+
+    {% if object.data_license_url %}
+    <dt>{% trans "Data License URL" %}</dt>
+    <dd itemprop="url">{{ object.data_license_url|escape|urlize|linebreaks|safe}}</dd>
+    {% endif %}
+
+    {% if object.metadata_url %}
+    <dt>{% trans "Metadata License URL" %}</dt>
+    <dd itemprop="url">{{ object.metadata_url|escape|urlize|linebreaks|safe}}</dd>
+    {% endif %}
+
+    {% if object.data_url %}
+    <dt>{% trans "Imported Data URL" %}</dt>
+    <dd itemprop="url">{{ object.data_url|escape|urlize|linebreaks|safe}}</dd>
+    {% endif %}
+
+    {% if object.status %}
+    <dt>{% trans "Status" %}</dt>
+    <dd itemprop="url">{{ object.status|escape|urlize|linebreaks|safe}}</dd>
+    {% endif %}
+
+    {% if object.created_dttm %}
+    <dt>{% trans "Created" %}</dt>
+    <dd itemprop="dateCreated" datetime="{{ object.created_dttm|date:"c"}}">{{ object.created_dttm }}</dd>
+    {% endif %}
+
+    {% if object.modified_dttm %}
+    <dt>{% trans "Modified" %}</dt>
+    <dd itemprop="dateCreated" datetime="{{ object.modified_dttm|date:"c"}}">{{ object.modified_dttm }}</dd>
+    {% endif %}
+</dl>
+</article>
+
+{% if request.user.is_superuser  %}
+   <a href="{%  url "data_request_edit" object.id %}">{%  trans "Update this request" %}</a>
+{% endif %}
+
+{% endblock %}

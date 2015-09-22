@@ -1,0 +1,44 @@
+{% extends "data_requests/request_base.html" %}
+{% load i18n %}
+{% load bootstrap_tags %}
+{% load url from future %}
+{% load base_tags %}
+{% load render_table from django_tables2 %}
+
+{% block title %}{% endblock %}
+
+{%  block head %}
+    {{  block.super }}
+    <style>
+        .pagination li {
+            padding-right: 20px;
+        }
+    </style>
+{%  endblock %}
+
+{% block body_outer %}
+<div class="page-header">
+  <h2 class="page-title">{% trans "Requested Datasets" %}</h2>
+</div>
+<div>
+    <p><a href="{% url "data_request_new" %}">{%  trans "Request a new dataset" %}</a></p>
+</div>
+    <div class="col-md-12 form-group" style="display:inline">
+<form action="" method="get">
+
+    {% for field in filter.form %}
+            <label style="margin-right:0em">{{ field.label }}:</label>
+            <div style="display:inline;padding-right:10px;">
+                {{ field }}
+            </div>
+    {% endfor %}
+
+<input type="submit" value="Filter" style="display:inline"/>
+</form>
+</div>
+
+    {% render_table table %}
+
+
+{% endblock %}
+

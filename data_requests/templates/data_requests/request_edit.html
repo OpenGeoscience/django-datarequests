@@ -1,0 +1,37 @@
+{% extends "data_requests/request_base.html" %}
+{% load i18n %}
+{% load bootstrap_tags %}
+{% load url from future %}
+{% load base_tags %}
+
+{% block title %}{{ data_request.name }}  {% endblock %}
+
+{% block body_outer %}
+<div class="page-header">
+  <h2 class="page-title">{% trans "Update " %}{{ data_request.name }} </h2>
+Required fields are indicated by an asterisk (*).
+</div>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<form action="{% url 'data_request_edit' data_request.id %}" method="post">
+{% csrf_token %}
+
+
+    {% for field in request_form %}
+        <div class="col-md-12 form-group">
+            {% if field.field.required %}
+                <div width="3" style="display:inline">*</div><label class="control-label required-field" for="{{ field.label }}">{{ field.label_tag }}</label>
+            {% else %}
+                <div width="3" style="display:inline">&nbsp;</div><label class="control-label" for="{{ field.label }}">{{ field.label_tag }}</label>
+            {% endif %}
+            <div class>
+                {{ field }}
+            </div>
+        </div>
+    {% endfor %}
+
+
+<input type="submit" value="Update" />
+</form>
+{% endblock %}
