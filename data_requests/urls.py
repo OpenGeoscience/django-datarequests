@@ -7,7 +7,6 @@ from . import models
 DATA_REQUESTS_PER_PAGE = getattr(settings, 'DATA_REQUESTS_PER_PAGE', 10)
 
 urlpatterns = [
-    #url(r'^$', views.request_list, name='data_request_list'),
     url(r'^$', views.DataRequestList.as_view(
         template_name="data_requests/request_list.html",
         table_pagination={"per_page": DATA_REQUESTS_PER_PAGE}),

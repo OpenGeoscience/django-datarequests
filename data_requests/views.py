@@ -10,17 +10,6 @@ import django_filters
 from .models import DataRequest, DataRequestTable
 from .forms import DataRequestForm, DataRequestAdminForm
 
-__author__ = 'mbertrand'
-
-
-# def request_list(request, template='data_requests/request_list.html'):
-#     """
-#     Retrieve a paged list of data requests
-#     """
-#     table = DataRequestTable(DataRequest.objects.all())
-#     RequestConfig(request, paginate={"per_page": DATA_REQUESTS_PER_PAGE}).configure(table)
-#     return render(request, template, {'requests': table})
-
 
 def request_new(request, template='data_requests/request_new.html'):
     """
@@ -70,6 +59,9 @@ class DataRequestDetailView(DetailView):
 
 
 class PagedFilteredTableView(SingleTableView):
+    """
+    SingleTableView with filtering and paging capabilities
+    """
     filter_class = None
     #formhelper_class = None
     context_filter_name = 'filter'
@@ -77,7 +69,6 @@ class PagedFilteredTableView(SingleTableView):
     def get_queryset(self, **kwargs):
         qs = super(PagedFilteredTableView, self).get_queryset()
         self.filter = self.filter_class(self.request.GET, queryset=qs)
-        #self.filter.form.helper = self.formhelper_class()
         return self.filter.qs
 
     def get_context_data(self, **kwargs):
@@ -85,11 +76,11 @@ class PagedFilteredTableView(SingleTableView):
         context[self.context_filter_name] = self.filter
         return context
 
-class DataRequestFormHelper(FormHelper):
-    model = DataRequest
-    form_tag = False
 
 class DataRequestFilter(django_filters.FilterSet):
+    """
+    Filters for data requests: status and source fields
+    """
     source = django_filters.ChoiceFilter()
     def __init__(self, *args, **kwargs):
         super(DataRequestFilter, self).__init__(*args, **kwargs)
@@ -106,8 +97,11 @@ class DataRequestFilter(django_filters.FilterSet):
         model = DataRequest
         fields = ['status', 'source']
 
+
 class DataRequestList(PagedFilteredTableView):
+    """
+    Creates a tabular, filtered, paged list of data requests
+    """
     model = DataRequest
     table_class = DataRequestTable
     filter_class = DataRequestFilter
-    #formhelper_class = DataRequestFormHelper

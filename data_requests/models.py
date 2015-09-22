@@ -17,6 +17,9 @@ DATA_STATUS_CHOICES = (
 
 
 class DataRequest(models.Model):
+    """
+    Model for a data request.
+    """
     name = models.CharField(_('data name'), max_length=255, null=False, blank=False)
     description = models.TextField(_('data description'),  null=False, blank=False)
     requestor_name = models.CharField(_('requestor name'), max_length=255, unique=False)
@@ -32,6 +35,9 @@ class DataRequest(models.Model):
 
 
 class DataRequestTable(tables.Table):
+    """
+    Django-table2 Table for DataRequest objects
+    """
     name = tables.columns.LinkColumn('data_request_detail', args=[A('pk')], verbose_name=_("Name"))
     source = tables.columns.Column(verbose_name=_("Data source"))
     status = tables.columns.Column(verbose_name=_("Status"))
