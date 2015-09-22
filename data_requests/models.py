@@ -42,12 +42,13 @@ class DataRequestTable(tables.Table):
     source = tables.columns.Column(verbose_name=_("Data source"))
     status = tables.columns.Column(verbose_name=_("Status"))
     modified_dttm = tables.columns.Column(verbose_name=_("Modified"))
+    requestor_name = tables.columns.Column(verbose_name=_("Requestor"))
 
     fields = ['name', 'source', 'status', 'modified_dttm']
 
     class Meta:
         model = DataRequest
-        exclude = ['description', 'requestor_name', 'requestor_email', 'url', 'data_license_url', 'metadata_url',
+        exclude = ['description', 'requestor_email', 'url', 'data_license_url', 'metadata_url',
                    'data_url', 'created_dttm', 'id']
         attrs = {'class': 'table table-striped table-bordered table-condensed'}
 

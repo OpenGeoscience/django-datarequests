@@ -51,6 +51,11 @@
     <dd itemprop="url">{{ object.data_url|escape|urlize|linebreaks|safe}}</dd>
     {% endif %}
 
+    {% if object.requestor_name %}
+    <dt>{% trans "Requestor" %}</dt>
+    <dd itemprop="name">{{ object.requestor_name|truncatechars:80 }}</dd>
+    {% endif %}
+
     {% if object.status %}
     <dt>{% trans "Status" %}</dt>
     <dd itemprop="url">{{ object.status|escape|urlize|linebreaks|safe}}</dd>
