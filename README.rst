@@ -1,6 +1,8 @@
 django-datarequests
 ========================
 
+Data Request Portal app for Django/GeoNode projects.
+
 Installation
 ------------
 
