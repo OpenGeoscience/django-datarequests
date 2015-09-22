@@ -12,7 +12,11 @@ Add this line to your requirements.txt file:
 
 pip install -r requirements.txt
 
+Add 'data_requests' and 'django_tables2' to your INSTALLED_APPS setting
+
 python manage.py syncdb
 
-Add 'data_requests' and 'django_tables2' to your INSTALLED_APPS setting
+Running tests
+------------
+python manage.py test data_requests
 
