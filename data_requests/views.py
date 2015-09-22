@@ -1,4 +1,3 @@
-from crispy_forms.helper import FormHelper
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
