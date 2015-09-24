@@ -8,7 +8,7 @@ Installation
 
 - Add this line to your requirements.txt file::
 
-    -e git+https://github.com/epidemico/django-datarequests.git#egg=django-datarequests
+    -e git+https://github.com/OpenGeoscience/django-datarequests.git#egg=django-datarequests
 
 - pip install -r requirements.txt
 
