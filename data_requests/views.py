@@ -27,7 +27,7 @@ def request_new(request, template='data_requests/request_new.html'):
         if request.user.is_anonymous():
             form = DataRequestForm()
         else:
-            form = DataRequestForm({
+            form = DataRequestForm(initial={
                 'requestor_name': request.user.get_full_name(),
                 'requestor_email': request.user.email})
     return render_to_response(template, RequestContext(request, {
