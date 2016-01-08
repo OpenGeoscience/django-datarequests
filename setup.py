@@ -22,8 +22,8 @@ setup(
     url='https://github.com/epidemico/django-datarequests',
     packages=['data_requests', ],
     install_requires=[
-      'django-tables2',
-      'django-filter'
+      'django-tables2==1.0.4',
+      'django-filter==0.11'
     ],
     include_package_data=True,
     zip_safe=False,
