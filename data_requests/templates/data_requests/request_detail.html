@@ -3,7 +3,7 @@
 {% load bootstrap_tags %}
 {% load url from future %}
 {% load base_tags %}
-
+{% load dialogos_tags %}
 {% block title %}{% endblock %}
 
 {% block body_outer %}
@@ -74,7 +74,43 @@
 </article>
 
 {% if request.user.is_superuser or request.user.email == object.requestor_email %}
-   <a href="{%  url "data_request_edit" object.id %}">{%  trans "Update this request" %}</a>
+   <a href="{%  url "data_request_edit" object.pk %}">{%  trans "Update this request" %}</a>
 {% endif %}
 
+
+{% with object as resource %}
+  {% include "_comments.html" %}
+{% endwith %}
+
 {% endblock %}
+
+{% block extra_script %}
+    <script type="text/javascript">
+       $("#comment_submit_btn").click(function(event) {
+            $.ajax({
+              type: "POST",
+              url: $("#form_post_comment").attr('action'),
+              data: $("#form_post_comment").serialize(),
+              success: function() {
+                $('#form_post_comment_div').modal('hide');
+                $('#comments_section').load(window.location.pathname + ' #comments_section',
+                		function(){$(this).children().unwrap()})
+              }
+            });
+            return false;
+          });
+       $(".btn btn-danger btn-xs").click(function(event) {
+            $.ajax({
+              type: "POST",
+              url: $("#form_post_comment").attr('action'),
+              data: $("#form_post_comment").serialize(),
+              success: function() {
+                $('#form_post_comment_div').modal('hide');
+                $('#comments_section').load(window.location.pathname + ' #comments_section',
+                		function(){$(this).children().unwrap()})
+              }
+            });
+            return false;
+          });
+    </script>
+{% endblock extra_script %}

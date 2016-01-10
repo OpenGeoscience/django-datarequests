@@ -2,6 +2,8 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django_tables2 import tables
 from django_tables2.utils import A
+from django.conf import settings
+from django.core.urlresolvers import reverse
 
 __author__ = 'mbertrand'
 
@@ -12,6 +14,9 @@ DATA_STATUS_CHOICES = (
         ('Duplicate', 'Duplicate'),
         ('Rejected', 'Rejected'),
 )
+
+DATA_REQUEST_NOTIFY = getattr(settings, 'DATA_REQUEST_NOTIFY', False)
+DATA_REQUEST_EMAILS = getattr(settings, 'DATA_REQUEST_EMAILS', settings.ADMINS)
 
 
 class DataRequest(models.Model):
@@ -39,6 +44,8 @@ class DataRequest(models.Model):
     created_dttm = models.DateTimeField(auto_now_add=True)
     modified_dttm = models.DateTimeField(auto_now=True)
 
+    def get_absolute_url(self):
+        return reverse('data_request_detail', args=(self.id,))
 
 class DataRequestTable(tables.Table):
     """

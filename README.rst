@@ -12,7 +12,23 @@ Installation
 
 - pip install -r requirements.txt
 
-- Add 'data_requests' and 'django_tables2' to your INSTALLED_APPS setting
+- Add the following to your INSTALLED_APPS setting::
+
+    INSTALLED_APPS = (
+                    ...
+                    'data_requests',
+                    'django_tables2',
+
+- Add the following to settings.py to enable email notifications::
+
+    DATA_REQUEST_NOTIFY = True
+    DATA_REQUEST_EMAILS = [<email_address>,]
+    DEFAULT_EMAIL_FROM = <default_from_email>
+    EMAIL_USE_TLS = False
+    EMAIL_HOST = <your_email_host>
+    EMAIL_HOST_USER = <email_host_user>
+    EMAIL_HOST_PASSWORD = <email_host_password>
+    EMAIL_PORT = <email_host_port>
 
 - Add the data_requests urls to your project's urls.py file::
 

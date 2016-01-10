@@ -1,0 +1,36 @@
+{% load i18n %}
+{% trans "The following data request has been updated:" %}
+
+{{ data_request.name }} - {{ data_request_url }}
+
+{% if data_request.created_dttm %}
+{% trans "Created" %}: {{ data_request.created_dttm|date:"M d, Y H:i"}}
+{% endif %}
+{% if data_request.status %}
+{% trans "Status" %}: {{ data_request.status|escape|safe}}
+{% endif %}
+{% if data_request.requestor_name %}
+{% trans "Requestor" %}: {{ data_request.requestor_name }}
+{% endif %}
+{% if data_request.source %}
+{% trans "Source" %}: {{ data_request.source|escape|safe }}
+{% endif %}
+{% if data_request.description %}
+{% trans "Description" %}: {{ data_request.description|escape|safe}}
+{% endif %}
+{% if data_request.url %}
+{% trans "URL" %}: {{ data_request.url|escape|safe }}
+{% endif %}
+{% if data_request.data_url %}
+{% trans "Imported Data URL" %}: {{ data_request.data_url|escape|safe}}
+{% endif %}
+{% if data_request.data_license_url %}
+{% trans "Data License URL" %}: {{ data_request.data_license_url|escape|safe}}
+{% endif %}
+{% if data_request.metadata_url %}
+{% trans "Metadata License URL" %}: {{ data_request.metadata_url|escape|safe}}
+{% endif %}
+{% if data_request.modified_dttm %}
+{% trans "Modified" %}: {{ data_request.modified_dttm|date:"M d, Y H:i"}}
+{% endif %}
+
