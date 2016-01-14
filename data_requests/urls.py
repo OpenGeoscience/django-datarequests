@@ -15,5 +15,4 @@ urlpatterns = [
         template_name='data_requests/request_detail.html'),
         name='data_request_detail'),
     url(r'^new$', views.request_new, name='data_request_new'),
-
 ]
